@@ -1781,6 +1781,7 @@ const Net = class SystemMonitor_Net extends ElementBase {
             item_name: _('Net'),
             color_name: ['down', 'downerrors', 'up', 'uperrors', 'collisions']
         });
+        this.max = 3145728; // 3MB
         this.speed_in_bits = false;
         this.ifs = [];
         this.client = libnm_glib ? NM.Client.new() : NM.Client.new(null);
@@ -1844,7 +1845,7 @@ const Net = class SystemMonitor_Net extends ElementBase {
             accum[4] += this.gtop.collisions;
         }
 
-        let time = GLib.get_monotonic_time() * 0.001024;
+        let time = GLib.get_monotonic_time() * 0.000001 // to sec
         let delta = time - this.last_time;
         if (delta > 0) {
             for (let i = 0; i < 5; i++) {
